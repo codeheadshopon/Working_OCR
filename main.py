@@ -612,7 +612,7 @@ class VizCallback(keras.callbacks.Callback):
         pylab.close()
 
 
-def train(run_name, start_epoch, stop_epoch, img_w,type_t,wf,in):
+def train(run_name, start_epoch, stop_epoch, img_w,type_t,wf,imname):
     # Input Parameters
     img_h = 64
     words_per_epoch = 16000
@@ -728,7 +728,7 @@ def train(run_name, start_epoch, stop_epoch, img_w,type_t,wf,in):
     imgwide=564
     import cv2
     from PIL import Image
-    img = Image.open(in)
+    img = Image.open(imname)
     img = img.resize((imgwide, 64), Image.ANTIALIAS)
 
     # img = cv2.imread('testimg_9.png')
