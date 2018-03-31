@@ -612,7 +612,7 @@ class VizCallback(keras.callbacks.Callback):
         pylab.close()
 
 
-def train(run_name, start_epoch, stop_epoch, img_w,type_t):
+def train(run_name, start_epoch, stop_epoch, img_w,type_t,wf,in):
     # Input Parameters
     img_h = 64
     words_per_epoch = 16000
@@ -696,7 +696,7 @@ def train(run_name, start_epoch, stop_epoch, img_w,type_t):
     test_func = K.function([input_data], [y_pred])
 
     viz_cb = VizCallback(run_name, test_func, img_gen.next_val())
-    model.load_weights('weightswithresize.h5')
+    model.load_weights(wf)
     # history = model.fit_generator(generator=img_gen.next_train(),
     #                     steps_per_epoch=(words_per_epoch - val_words) // minibatch_size,
     #                     epochs=stop_epoch,
@@ -728,7 +728,7 @@ def train(run_name, start_epoch, stop_epoch, img_w,type_t):
     imgwide=564
     import cv2
     from PIL import Image
-    img = Image.open('tester.png')
+    img = Image.open(in)
     img = img.resize((imgwide, 64), Image.ANTIALIAS)
 
     # img = cv2.imread('testimg_9.png')
@@ -751,9 +751,12 @@ def train(run_name, start_epoch, stop_epoch, img_w,type_t):
     decode_batch(test_func,X_data)
     #
 if __name__ == '__main__':
+    sys.argv[0] # prints python_script.py
+    weightfile=sys.argv[1] # prints var1
+    imagename=sys.argv[2]
     run_name = datetime.datetime.now().strftime('%Y:%m:%d:%H:%M:%S')
     # type_t="singleword"
     # train(run_name, 0, 20, 256,type_t)
 
     type_t="other"
-    train(run_name, 0,1500, 564,type_t)
+    train(run_name, 0,1500, 564,type_t,weightfile,imagename)
